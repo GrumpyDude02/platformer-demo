@@ -46,17 +46,18 @@ class water():
                 self.springs_list[i+1].speed+=self.right[i]
          
                  
-    def water_polygon_list(self,bounding_y):
+    def water_polygon_list(self,bounding_y,scroll_x,scroll_y):
         self.water_polygon=[(self.x-1+self.tile_size*self.length,self.y+self.tile_size-bounding_y),(self.x-1,self.y+self.tile_size-bounding_y)]
+        self.water_surf_lines=[]
         for i in range(len(self.springs_list)):
             self.water_polygon.append((self.springs_list[i].pos.x,self.springs_list[i].pos.y))
-        return self.water_polygon
+            self.water_surf_lines.append((self.springs_list[i].pos.x-scroll_x,self.springs_list[i].pos.y-1.5-scroll_y))
+        return self.water_polygon,self.water_surf_lines
     
     def check_collision(self,ob_rect,ob_speed_y,ob_speed_x):
         for i in range(len(self.springs_list)):
             if ob_rect.colliderect(self.springs_list[i].rect):
-                self.springs_list[i].speed+=ob_speed_y*0.08
+                self.springs_list[i].speed+=ob_speed_y*0.2
                 self.springs_list[i].speed-=abs(ob_speed_x)*0.03
-                print('collide')
                 
                 
